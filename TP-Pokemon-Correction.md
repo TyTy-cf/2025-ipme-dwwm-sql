@@ -37,7 +37,7 @@ LIMIT 1;
 ```sql
 SELECT *
 FROM pokemon
-ORDER BY height DESC
+ORDER BY height
 LIMIT 1;
 ```
 
