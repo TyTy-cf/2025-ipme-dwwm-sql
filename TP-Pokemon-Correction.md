@@ -51,6 +51,23 @@ ORDER BY spe
 LIMIT 1;
 ```
 
+Exemple avec une sous-requête :
+
+On récupère d'abord la vitesse minimum parmis tous les Pokémons :
+
+```sql
+SELECT MIN(spe) FROM pokemon;
+```
+
+On l'intègre dans une requête récupérant les informations que l'on souhaite et réutilisant cette donnée :
+
+```sql
+SELECT *
+FROM pokemon
+WHERE spe = (SELECT MIN(spe) FROM pokemon)
+ORDER BY name;
+```
+
 
 # 6/ Afficher les pokémons par atk, dont l’atk est supérieur à 150
 
@@ -82,9 +99,12 @@ WHERE slug = name_api;
 # 9/ Afficher les pokémons dont l’atk est supérieure à la moyenne d’atk de tous les pokémons
 
 ```sql
+-- Récupère la moyenne d'atk parmis tous les pokémons
+SELECT AVG(atk) FROM pokemon; 
+
 SELECT *
 FROM pokemon
-HAVING atk >= (SELECT AVG(atk) FROM pokemon);
+WHERE atk >= (SELECT AVG(atk) FROM pokemon);
 ```
 
 
