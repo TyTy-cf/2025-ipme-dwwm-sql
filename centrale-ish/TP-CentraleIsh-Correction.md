@@ -12,9 +12,40 @@ Explication de la base :
 
 # 1/ Afficher les informations des utilisateurs et, s'ils en possèdent une, leur adresse 
 
-# 2/ Afficher les 20 dernières annonces, on affichera seulement les colonnes suivantes : title, price et mileage. Price sera concaténé à "€" et mileage à "km" (PS : les prices sont en centimes, il faut les diviser par 100)
+Utilisation de "LEFT JOIN" car je veux récupérer TOUS les utilisateurs, même ceux qui n'ont pas renseigné d'adresse.
+
+```sql
+SELECT *
+FROM user
+LEFT JOIN address ON address.user_uuid = user.uuid;
+```
+
+# 2/ Afficher les 20 dernières annonces, on affichera seulement les colonnes suivantes : title, created_at, price et mileage. Price sera concaténé à "€" et mileage à "km" (PS : les prices sont en centimes, il faut les diviser par 100)
+
+```sql
+SELECT 	listing.title,
+        listing.created_at,
+        CONCAT(ROUND(listing.price/100, 2), '€') AS 'price',
+        CONCAT(listing.mileage, 'km') AS 'km'
+
+FROM listing
+ORDER BY listing.created_at DESC
+LIMIT 20;
+```
 
 # 3/ Afficher le nombre d'annonces par marque de voiture
+
+```sql
+SELECT  brand.name AS 'marque',
+        COUNT(*)    
+
+FROM brand
+
+JOIN model ON model.brand_id = brand.id
+JOIN listing ON listing.model_id = model.id
+
+GROUP BY brand.name;
+```
 
 # 4/ Afficher les annonces de voitures de la marque "Renault" ayant au moins 50000km
 
