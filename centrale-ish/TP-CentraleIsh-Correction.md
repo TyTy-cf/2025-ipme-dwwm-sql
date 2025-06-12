@@ -26,7 +26,7 @@ Explication de la base :
 
 # 8/ Afficher les 5 modèles de voitures les plus mis en vente
 
-# 9/ Afficher les annonces pour les voitures électriques
+# 9/ Afficher les annonces pour les voitures Diesel
 
 # 10/ Afficher les modèles de voiture n'ayant pas de modèle électrique en annonce
 
