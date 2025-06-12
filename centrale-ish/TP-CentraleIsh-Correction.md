@@ -28,7 +28,7 @@ Explication de la base :
 
 # 9/ Afficher les annonces pour les voitures Diesel
 
-# 10/ Afficher les modèles de voiture n'ayant pas de modèle électrique en annonce
+# 10/ Afficher les modèles de voiture n'ayant pas de modèle diesel en annonce
 
 # 11/ Afficher les 20 dernières annonces, mais de la page 3 (on considère que l'on a 20 annonces par page)
 
