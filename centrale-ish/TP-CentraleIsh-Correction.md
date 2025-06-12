@@ -36,8 +36,12 @@ Explication de la base :
 
 # 13/ Afficher les adresses, dont le "street_name" est présent plus d'une fois, et trier par ordre décroissant
 
-# 14/ Afficher les user n'ayant pas défini d'adresses (leur "uuid" n'est pas présent dans la table "address" )
+# 14/ Afficher les user n'ayant pas défini d'adresses (leur "uuid" n'est pas présent dans la table "address")
 
-# 15/ Afficher les annonces n'ayant aucune image (si il y en a ?)
+# 15/ Afficher les annonces n'ayant aucune image (s'il y en a ?)
 
 # 16/ Afficher les annonces ayant plusieurs images
+
+# 17/ Afficher par marque, leur somme totale mise en vente, les trier par ordre décroissant
+
+# 18/ Afficher le nombre d'annonce déposée par mois, depuis le début de l'année 2025
