@@ -68,6 +68,16 @@ WHERE listing.created_at >= (NOW() - INTERVAL 6 MONTH);
 
 # 10/ Afficher les modèles de voiture n'ayant pas de modèle diesel en annonce
 
+```sql
+SELECT model.name, model.id
+FROM model
+WHERE model.id NOT IN (
+	SELECT DISTINCT model_id
+	FROM `listing`
+	WHERE `fuel_id` = 2
+);
+```
+
 # 11/ Afficher les 20 dernières annonces, mais de la page 3 (on considère que l'on a 20 annonces par page)
 
 # 12/ Afficher le nombre d'adresses enregistrées par ville, les trier par ordre décroissant
