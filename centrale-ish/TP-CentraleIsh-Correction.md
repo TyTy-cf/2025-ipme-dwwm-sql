@@ -53,6 +53,12 @@ GROUP BY brand.name;
 
 # 6/ Afficher les emails des utilisateurs ayant fait au moins une annonce dans les 6 derniers mois
 
+```sql
+SELECT *
+FROM listing
+WHERE listing.created_at >= (NOW() - INTERVAL 6 MONTH);
+```
+
 # 7/ Afficher le nombre d'annonces déposées par années (Exemple : "2025 → 10", "2024 → 59", etc...)
 
 # 8/ Afficher les 5 modèles de voitures les plus mis en vente
