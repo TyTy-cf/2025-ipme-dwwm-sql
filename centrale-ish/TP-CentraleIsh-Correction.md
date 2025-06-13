@@ -49,7 +49,38 @@ GROUP BY brand.name;
 
 # 4/ Afficher les annonces de voitures de la marque "Renault" ayant au moins 50000km
 
+```sql
+SELECT *
+FROM listing
+JOIN model ON model.id = listing.model_id
+JOIN brand ON brand.id = model.brand_id
+WHERE listing.mileage >= 50000
+AND brand.name = 'Renault';
+```
+
 # 5/ Afficher les annonces de voitures de la marque "Ford" ayant au moins 30000km et un prix maxmimum de 12000€ (Attention aux centimes...)
+
+Solution en divisant le prix par 100
+```sql
+SELECT *
+FROM listing
+JOIN model ON model.id = listing.model_id
+JOIN brand ON brand.id = model.brand_id
+WHERE listing.mileage >= 30000
+AND (listing.price/100) <= 12000
+AND brand.name = 'Ford';
+```
+
+Solution en ajoutant 00 à la fin du 12000, ou en le multipliant par 100
+```sql
+SELECT *
+FROM listing
+JOIN model ON model.id = listing.model_id
+JOIN brand ON brand.id = model.brand_id
+WHERE listing.mileage >= 30000
+AND listing.price <= 12000 * 100
+AND brand.name = 'Ford';
+```
 
 # 6/ Afficher les emails des utilisateurs ayant fait au moins une annonce dans les 6 derniers mois
 
@@ -61,6 +92,13 @@ WHERE listing.created_at >= (NOW() - INTERVAL 6 MONTH);
 ```
 
 # 7/ Afficher le nombre d'annonces déposées par années (Exemple : "2025 → 10", "2024 → 59", etc...)
+
+```sql
+SELECT 	COUNT(*),
+        YEAR(listing.created_at) AS `year`
+FROM listing
+GROUP BY `year`;
+```
 
 # 8/ Afficher les 5 modèles de voitures les plus mis en vente
 
@@ -82,7 +120,7 @@ WHERE model.id NOT IN (
 
 # 12/ Afficher le nombre d'adresses enregistrées par ville, les trier par ordre décroissant
 
-# 13/ Afficher les adresses, dont le "street_name" est présent plus d'une fois, et trier par ordre décroissant
+# 13/ Afficher les adresses, dont le "street_name" est présent plus d'une fois (dans la table "address" !), et trier par ordre décroissant
 
 # 14/ Afficher les user n'ayant pas défini d'adresses (leur "uuid" n'est pas présent dans la table "address")
 
