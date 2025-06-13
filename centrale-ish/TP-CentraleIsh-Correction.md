@@ -54,8 +54,9 @@ GROUP BY brand.name;
 # 6/ Afficher les emails des utilisateurs ayant fait au moins une annonce dans les 6 derniers mois
 
 ```sql
-SELECT *
-FROM listing
+SELECT user.email
+FROM user
+JOIN listing ON listing.owner_uuid = user.uuid
 WHERE listing.created_at >= (NOW() - INTERVAL 6 MONTH);
 ```
 
