@@ -13,6 +13,13 @@ Explication de la base :
   
 (PS : le price est en centimes, là encore il faut le diviser par 100 pour l'avoir en €, il faudra le faire à chaque fois que le prix sera demandé)
 
+Récapitulatif des "status" de commande :
+- 100 : à payer
+- 110 : en cours de préparation
+- 120 : livraison lancée
+- 130 : en cours de livraison
+- 140 : livrée
+
 ### 1/ Affichez les 9 produits les plus vendus, avec seulement les colonnes "product.id", "product.label", "product.price", "product.reference"
 
 ### 2/ Affichez les 4 catégories les plus vendus, avec seulement les colonnes "category.label", "category.id"
