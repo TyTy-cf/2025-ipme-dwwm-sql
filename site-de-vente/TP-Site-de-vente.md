@@ -14,7 +14,7 @@ Explication de la base :
 (PS : le price est en centimes, là encore il faut le diviser par 100 pour l'avoir en €, il faudra le faire à chaque fois que le prix sera demandé)
 
 Récapitulatif des "status" de commande :
-- 100 : à payer
+- 100 : payée
 - 110 : en cours de préparation
 - 120 : livraison lancée
 - 130 : en cours de livraison
@@ -38,3 +38,18 @@ Récapitulatif des "status" de commande :
 
 ### 9/ Affichez un récapitulatif des commandes de l'utilisateur, par exemple pour celui d'id "5". On affichera les colonnes suivantes : "order.address" (toutes les infos de celle-ci), "order.created_at", "order.status", "prix total de la commande" (à vous de trouver comment l'avoir... sachant que la colonne promotion est une réduction du prix de la commande en %)
 
+### 10/ Affichez les produits relatifs à un autre, on considère que des produits sont relatifs l'un à l'autre lorsqu'ils ont la même catégorie. Prenez l'exemple avec l'id produit : 52
+
+### 11/ Affichez toutes les catégories principales de l'application, par ordre alphabétique
+
+### 12/ Affichez le nombre d'utilisateurs n'ayant pas validé leur inscription (colonne "activation_code" n'est pas null) depuis 1 ans
+
+### 13/ Affichez les 3 mois les plus propices aux ventes, depuis le début du lancement de l'application (petit piège ici !)
+
+### 14/ Affichez les 5 villes où le site livre le plus
+
+### 15/ Affichez les 5 marques les plus vendus
+
+### 16/ Affichez notre meilleur vendeur (un seul suffit ici !)
+
+### 17/ Affichez 4 produits en adéquation avec la géolocation de l'utilisateur. L'utilisateur a une adresse à "Clermont-Ferrand", recommandez lui les 4 produits les plus achetés par des utilisateurs ayant une adresse à Clermont-Ferrand 
