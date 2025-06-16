@@ -67,6 +67,24 @@ LIMIT 4;
 
 ### 7/ Afficher les produits de la catégorie "Books" et de ses sous-catégories
 
+```sql
+SELECT  product.id,
+		product.label
+
+FROM 
+	product_categories pc LEFT JOIN product ON pc.products_id = product.id,
+	category parent LEFT JOIN category child ON child.parent_id = parent.id
+
+WHERE parent.label = 'Books'
+AND (
+    pc.categories_id = parent.id
+    OR
+    pc.categories_id = child.id
+)
+
+GROUP BY product.label;
+```
+
 ### 8/ Affichez les produits de la catégorie "Books" et de ses sous-catégories, mais cette fois, ceux de la page 4, on affichera 12 produits par page. De plus, afficher le total de produits à afficher, par exemple pour faire un affichage comme celui-là : "48 sur 168"
 
 ```sql
