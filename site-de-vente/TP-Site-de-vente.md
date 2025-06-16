@@ -231,14 +231,91 @@ GROUP BY product.id;
 
 ### 11/ Affichez toutes les catégories principales de l'application, par ordre alphabétique
 
+```sql
+SELECT *
+FROM category
+WHERE category.parent_id IS NULL
+ORDER BY category.label;
+```
+
 ### 12/ Affichez le nombre d'utilisateurs n'ayant pas validé leur inscription (colonne "activation_code" n'est pas null) depuis 1 ans
+
+```sql
+SELECT COUNT(*)
+FROM `user`
+WHERE user.activation_code IS NOT NULL
+AND user.created_at >= NOW() - INTERVAL 1 YEAR;
+```
 
 ### 13/ Affichez les 3 mois les plus propices aux ventes, depuis le début du lancement de l'application (petit piège ici !)
 
+On compte le nombre de ventes, et on regroupe par année et mois, via les fonctions YEAR() et MONTH()
+
+```sql
+SELECT COUNT(*) AS nbVentes, YEAR(o.created_at) AS année, MONTH(o.created_at) AS mois
+FROM `order` AS o
+GROUP BY YEAR(o.created_at), MONTH(o.created_at)
+ORDER BY COUNT(*) DESC
+LIMIT 3;
+```
+
 ### 14/ Affichez les 5 villes où le site livre le plus
+
+Les villes qui sont le plus livrées sont celles dont l'address_id est le plus présent dans la table "order"
+
+```sql
+SELECT address.city, COUNT(*)
+FROM address
+JOIN `order` AS o ON o.address_id = address.id
+GROUP BY address.city
+ORDER BY COUNT(*) DESC
+LIMIT 5;
+```
 
 ### 15/ Affichez les 5 marques les plus vendus
 
+J'ai légèrement triché ici, j'aurai pu passer par "product" entre "product_order" et "product_characteristic", mais c'est la même chose de passer par 2 clés étrangères ici.
+
+```sql
+SELECT COUNT(*), pc.value
+FROM product_characteristic pc
+JOIN characteristic c ON c.id = pc.characteristic_id
+JOIN product_order po ON po.product_id = pc.product_id
+JOIN `order` o ON o.id = po.order_id
+WHERE c.label = "Marque"
+GROUP BY pc.value
+ORDER BY COUNT(*) DESC
+LIMIT 5;
+```
+
 ### 16/ Affichez notre meilleur vendeur (un seul suffit ici !)
 
+Même base de requête que la 15, sauf que l'on met "Vendeur" et LIMIT 1
+
+```sql
+SELECT COUNT(*), pc.value
+FROM product_characteristic pc
+JOIN characteristic c ON c.id = pc.characteristic_id
+JOIN product_order po ON po.product_id = pc.product_id
+JOIN `order` o ON o.id = po.order_id
+WHERE c.label = "Vendeur"
+GROUP BY pc.value
+ORDER BY COUNT(*) DESC
+LIMIT 1;
+```
+
 ### 17/ Affichez 4 produits en adéquation avec la géolocation de l'utilisateur. L'utilisateur a une adresse à "Clermont-Ferrand", recommandez lui les 4 produits les plus achetés par des utilisateurs ayant une adresse à Clermont-Ferrand 
+
+On compte "simplement" les produits les plus vendus dans un premier puis on ajoute le "WHERE" sur la ville, en triant par ordre décroissant et LIMIT 4
+
+```sql
+SELECT p.*
+FROM product p
+JOIN product_order po ON po.product_id = p.id
+JOIN `order` o ON o.id = po.order_id
+JOIN address a ON a.id = o.address_id
+WHERE a.city = "Clermont-Ferrand"
+GROUP BY p.id
+ORDER BY COUNT(*) DESC
+LIMIT 4;
+```
