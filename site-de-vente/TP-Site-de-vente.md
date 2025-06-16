@@ -192,9 +192,42 @@ LIMIT 12  OFFSET 48;
 
 ### 9/ Affichez un récapitulatif des commandes de l'utilisateur, par exemple pour celui d'id "5". On affichera les colonnes suivantes : "order.address" (toutes les infos de celle-ci), "order.created_at", "order.status", "prix total de la commande" (à vous de trouver comment l'avoir... sachant que la colonne promotion est une réduction du prix de la commande en %)
 
+```sql
+SELECT 	address.number,
+        address.street_name,
+        address.zip_code,
+        address.city,
+        address.country,
+        o.status,
+        o.promotion,
+        o.created_at,
+        ROUND(SUM(product.price * product_order.quantity) / 100, 2) AS avantReduc,
+        ROUND((SUM(product.price * product_order.quantity) * ( 1 - (o.promotion / 100)) / 100), 2) AS total
 
+FROM `order` AS o
+
+JOIN address ON address.id = o.address_id
+JOIN product_order ON product_order.order_id = o.id
+JOIN product ON product.id = product_order.product_id
+
+GROUP BY o.id;
+```
 
 ### 10/ Affichez les produits relatifs à un autre, on considère que des produits sont relatifs l'un à l'autre lorsqu'ils ont la même catégorie. Prenez l'exemple avec l'id produit : 52
+
+```sql
+SELECT product.*
+FROM product
+JOIN product_categories ON product_categories.products_id = product.id
+WHERE product_categories.categories_id IN (
+    SELECT category.id
+    FROM category 
+    JOIN product_categories ON product_categories.categories_id = category.id
+    WHERE product_categories.products_id = 52
+)
+AND product.id != 52
+GROUP BY product.id;
+```
 
 ### 11/ Affichez toutes les catégories principales de l'application, par ordre alphabétique
 
