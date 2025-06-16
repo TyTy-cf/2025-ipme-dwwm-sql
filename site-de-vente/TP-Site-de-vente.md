@@ -69,6 +69,41 @@ LIMIT 4;
 
 ### 8/ Affichez les produits de la catégorie "Books" et de ses sous-catégories, mais cette fois, ceux de la page 4, on affichera 12 produits par page. De plus, afficher le total de produits à afficher, par exemple pour faire un affichage comme celui-là : "48 sur 168"
 
+```sql
+SELECT  product.id,
+        product.label,
+        c.label,
+        (
+           SELECT COUNT(DISTINCT product_categories.products_id)
+           FROM product_categories, category parent
+           LEFT JOIN category child ON child.parent_id = parent.id
+           WHERE parent.label = 'Books'
+           AND (
+               product_categories.categories_id = parent.id
+               OR
+               product_categories.categories_id = child.id
+           ) 
+        ) AS "nbElements"
+
+FROM product_categories
+
+JOIN category c ON c.id = categories_id
+JOIN product ON product_categories.products_id = product.id
+
+WHERE c.parent_id = (
+    SELECT id
+    FROM category c2
+    WHERE c2.label = 'Books'
+)
+OR c.id = (
+    SELECT id
+    FROM category c2
+    WHERE c2.label = 'Books'
+)
+
+LIMIT 12  OFFSET 48;
+```
+
 ### 9/ Affichez un récapitulatif des commandes de l'utilisateur, par exemple pour celui d'id "5". On affichera les colonnes suivantes : "order.address" (toutes les infos de celle-ci), "order.created_at", "order.status", "prix total de la commande" (à vous de trouver comment l'avoir... sachant que la colonne promotion est une réduction du prix de la commande en %)
 
 ### 10/ Affichez les produits relatifs à un autre, on considère que des produits sont relatifs l'un à l'autre lorsqu'ils ont la même catégorie. Prenez l'exemple avec l'id produit : 52
