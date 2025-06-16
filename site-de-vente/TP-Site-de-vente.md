@@ -69,18 +69,18 @@ LIMIT 4;
 
 ```sql
 SELECT  product.id,
-		product.label
+        product.label
 
-FROM 
-	product_categories pc LEFT JOIN product ON pc.products_id = product.id,
-	category parent LEFT JOIN category child ON child.parent_id = parent.id
+FROM
+    product_categories `pc` JOIN product ON pc.products_id = product.id,
+    category `parent` LEFT JOIN category child ON child.parent_id = parent.id
 
 WHERE parent.label = 'Books'
-AND (
+  AND (
     pc.categories_id = parent.id
-    OR
+        OR
     pc.categories_id = child.id
-)
+    )
 
 GROUP BY product.label;
 ```
