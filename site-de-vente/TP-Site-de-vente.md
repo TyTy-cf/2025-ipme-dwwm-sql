@@ -59,11 +59,65 @@ LIMIT 4;
 
 ### 3/ Affichez les 9 produits vendus dernièrement, avec seulement les colonnes "product.id", "product.label", "product.price", "product.reference"
 
+```sql
+SELECT product.id,
+       product.label,
+       product.price,
+       product.reference,
+       o.created_at
+
+FROM product
+    
+JOIN product_order ON product_order.product_id = product.id
+JOIN `order` AS o ON o.id = product_order.order_id
+
+ORDER BY o.created_at DESC
+    
+LIMIT 9;
+```
+
 ### 4/ Affichez les 4 derniers commentaires postés, avec seulement les colonnes : "product.id", "user.id", "user.username", "product.label", "review.rating", "review.created_at"
+
+```sql
+
+SELECT 	product.id,
+        product.label,
+        user.id,
+        user.username,
+        comment.rating,
+        comment.created_at
+
+FROM comment
+
+JOIN product ON product.id = comment.product_id
+JOIN user ON user.id = comment.user_id
+
+ORDER BY comment.created_at DESC
+
+LIMIT 4;
+```
 
 ### 5/ Affichez les informations de l'utilisateur avec ses adresses, avec seulement les colonnes : "user.id", "user.username", "user.first_name", "user.last_name", "address.*"
 
+```sql
+SELECT	user.id,
+		user.username,
+        user.first_name,
+        user.last_name,
+        address.number,
+        address.street_name,
+        address.zip_code,
+        address.city,
+        address.country
+
+FROM user
+
+JOIN address ON address.user_id = user.id;
+```
+
 ### 6/ Affichez le ou les utilisateurs ayant renseigné le plus d'adresses
+
+
 
 ### 7/ Afficher les produits de la catégorie "Books" et de ses sous-catégories
 
