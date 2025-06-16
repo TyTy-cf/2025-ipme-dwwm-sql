@@ -117,7 +117,21 @@ JOIN address ON address.user_id = user.id;
 
 ### 6/ Affichez le ou les utilisateurs ayant renseigné le plus d'adresses
 
+```sql
+SELECT	user.id,
+        user.username,
+        user.first_name,
+        user.last_name,
+        COUNT(*)
 
+FROM user
+
+JOIN address ON address.user_id = user.id
+
+GROUP BY user.id
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC;
+```
 
 ### 7/ Afficher les produits de la catégorie "Books" et de ses sous-catégories
 
@@ -177,6 +191,8 @@ LIMIT 12  OFFSET 48;
 ```
 
 ### 9/ Affichez un récapitulatif des commandes de l'utilisateur, par exemple pour celui d'id "5". On affichera les colonnes suivantes : "order.address" (toutes les infos de celle-ci), "order.created_at", "order.status", "prix total de la commande" (à vous de trouver comment l'avoir... sachant que la colonne promotion est une réduction du prix de la commande en %)
+
+
 
 ### 10/ Affichez les produits relatifs à un autre, on considère que des produits sont relatifs l'un à l'autre lorsqu'ils ont la même catégorie. Prenez l'exemple avec l'id produit : 52
 
