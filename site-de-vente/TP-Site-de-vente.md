@@ -22,7 +22,40 @@ Récapitulatif des "status" de commande :
 
 ### 1/ Affichez les 9 produits les plus vendus, avec seulement les colonnes "product.id", "product.label", "product.price", "product.reference"
 
+```sql
+SELECT 	product.id,
+        product.label,
+        product.price,
+        product.reference,
+        SUM(product_order.quantity) as qty
+
+FROM product
+JOIN product_order ON product_order.product_id = product.id
+ 
+GROUP BY product.label
+
+ORDER BY qty DESC
+LIMIT 9;
+```
+
 ### 2/ Affichez les 4 catégories les plus vendus, avec seulement les colonnes "category.label", "category.id"
+
+```sql
+SELECT 	category.id,
+        category.label,
+        SUM(product_order.quantity) as qty
+
+FROM category
+
+JOIN product_categories ON product_categories.categories_id = category.id
+JOIN product ON product.id = product_categories.products_id
+JOIN product_order ON product_order.product_id = product.id
+ 
+GROUP BY category.label
+
+ORDER BY qty DESC
+LIMIT 4;
+```
 
 ### 3/ Affichez les 9 produits vendus dernièrement, avec seulement les colonnes "product.id", "product.label", "product.price", "product.reference"
 
